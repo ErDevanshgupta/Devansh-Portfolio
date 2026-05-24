@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npx next *ect)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(npm run *)",
+      "Bash(node -e \"const t=require\\('./tailwind.config.js'\\); console.log\\('tailwind config OK, colors:', Object.keys\\(t.theme.extend.colors\\)\\)\")"
     ]
   }
 }
