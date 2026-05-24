@@ -1,3 +1,6 @@
 /Plan/
 /Keys.txt
 /backend/.env   
+/frontend/.env
+/node_modules/
+/CLAUDE.md
