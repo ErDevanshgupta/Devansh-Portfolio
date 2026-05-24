@@ -26,8 +26,7 @@ Thumbs.db
 # ── Misc ──────────────────────────────────────────────
 /Plan/
 /CLAUDE.md
+/deploy.md
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-/deploy.md
