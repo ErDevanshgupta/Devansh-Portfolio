@@ -21,6 +21,12 @@ const CATEGORY_STYLE = {
   Industry:  'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 border-primary-200 dark:border-primary-800/40',
 };
 
+const SPECIAL_BADGE_STYLE = {
+  'Production System': 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800/40',
+  'Published Research':'bg-violet-50  dark:bg-violet-900/20  text-violet-700  dark:text-violet-400  border-violet-200  dark:border-violet-800/40',
+  'Patent-backed':     'bg-amber-50   dark:bg-amber-900/20   text-amber-700   dark:text-amber-400   border-amber-200   dark:border-amber-800/40',
+};
+
 function ProjectCard({ project, index }) {
   const category   = project.category || 'Personal';
   const badgeClass = CATEGORY_STYLE[category] || CATEGORY_STYLE.Personal;
@@ -46,12 +52,19 @@ function ProjectCard({ project, index }) {
         }`} />
 
         <div className="p-6 flex flex-col gap-4 flex-1">
-          {/* Category badge + external links */}
-          <div className="flex items-center justify-between">
-            <span className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${badgeClass}`}>
-              {category}
-            </span>
-            <div className="flex items-center gap-2.5">
+          {/* Category badge + special badge + external links */}
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${badgeClass}`}>
+                {category}
+              </span>
+              {project.specialBadge && (
+                <span className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${SPECIAL_BADGE_STYLE[project.specialBadge] || ''}`}>
+                  {project.specialBadge}
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-2.5 shrink-0">
               {links.map(({ href, icon: Icon, label }) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer" title={label}
                    className="text-slate-400 dark:text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">

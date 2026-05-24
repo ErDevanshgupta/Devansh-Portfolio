@@ -13,6 +13,7 @@ export const PROJECTS_DATA = [
       { label: 'Type',     value: 'Freelance' },
       { label: 'Category', value: 'Full-Stack' },
     ],
+    specialBadge: 'Production System',
     demoUrl: 'https://kanhaji.jp',
     githubUrl: '',
     paperUrl: '',
@@ -86,6 +87,7 @@ export const PROJECTS_DATA = [
       { label: 'Published',    value: 'CMC Journal' },
       { label: 'Year',         value: '2025' },
     ],
+    specialBadge: 'Published Research',
     demoUrl: '',
     githubUrl: '',
     paperUrl: 'https://www.techscience.com/cmc/v86n1/64475',
@@ -114,6 +116,7 @@ export const PROJECTS_DATA = [
     subtitle: 'Software Defined Underwater Monitoring & Routing Framework',
     tagline: 'Patent-backed SDN-based underwater routing and monitoring system for secure, adaptive communication in underwater acoustic sensor networks.',
     category: 'Research',
+    specialBadge: 'Patent-backed',
     techStack: ['Python', 'Software Defined Networking (SDN)', 'Network Simulation', 'Routing Algorithms', 'Trust Models'],
     metrics: [
       { label: 'Recognition', value: 'Patent' },
@@ -123,7 +126,7 @@ export const PROJECTS_DATA = [
     ],
     demoUrl: '',
     githubUrl: '',
-    paperUrl: '#',
+    paperUrl: '',
     built: [
       'Designed a software-defined underwater communication framework for adaptive and intelligent packet routing.',
       'Developed trust-aware routing mechanisms to improve network reliability and security in underwater acoustic sensor networks.',

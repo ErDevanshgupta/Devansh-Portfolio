@@ -12,15 +12,14 @@ const blogSchema = new mongoose.Schema({
   publishedAt: { type: Date }
 }, { timestamps: true });
 
-// Auto-calculate read time before saving
-blogSchema.pre('save', function (next) {
+// Auto-calculate read time before saving (mongoose 9 uses promise-based hooks)
+blogSchema.pre('save', function () {
   const wordsPerMinute = 200;
   const wordCount = this.content.split(/\s+/).length;
   this.readTime = Math.ceil(wordCount / wordsPerMinute);
   if (this.status === 'published' && !this.publishedAt) {
     this.publishedAt = new Date();
   }
-  next();
 });
 
 module.exports = mongoose.model('Blog', blogSchema);

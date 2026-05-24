@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { scrollTo } from '@/lib/utils';
 import { Menu, X, Code2, Sun, Moon } from 'lucide-react';
 import { useTheme } from '@/components/ui/ThemeProvider';
@@ -27,8 +28,13 @@ export default function Navbar() {
 
   const handleNav = (link) => {
     setMenuOpen(false);
-    if (link.href) window.location.href = link.href;
-    else scrollTo(link.id);
+    if (link.href) {
+      window.location.href = link.href;
+    } else if (window.location.pathname !== '/') {
+      window.location.href = `/#${link.id}`;
+    } else {
+      scrollTo(link.id);
+    }
   };
 
   return (
@@ -38,12 +44,12 @@ export default function Navbar() {
         : 'bg-transparent'}`}>
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Code2 size={22} className="text-primary-600 dark:text-primary-400" />
           <span className="font-bold text-slate-900 dark:text-white text-lg">
             Devansh<span className="text-primary-600 dark:text-primary-400">.</span>
           </span>
-        </div>
+        </Link>
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-1">
