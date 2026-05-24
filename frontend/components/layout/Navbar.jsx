@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { scrollTo } from '@/lib/utils';
-import { Menu, X, Code2, Sun, Moon } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { Menu, X, Code2, Sun, Moon, Sparkles } from 'lucide-react';
 import { useTheme } from '@/components/ui/ThemeProvider';
 
 const NAV_LINKS = [
@@ -10,6 +11,7 @@ const NAV_LINKS = [
   { label: 'Skills', id: 'skills' },
   { label: 'Projects', id: 'projects' },
   { label: 'Experience', id: 'experience' },
+  { label: 'Certifications', id: 'certifications' },
   { label: 'Research', id: 'research' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contact', id: 'contact' },
@@ -19,12 +21,17 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme, toggle } = useTheme();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handler);
     return () => window.removeEventListener('scroll', handler);
   }, []);
+
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   const handleNav = (link) => {
     setMenuOpen(false);
@@ -63,15 +70,16 @@ export default function Navbar() {
             </button>
           ))}
 
-          {/* Theme toggle */}
+          {/* Theme toggle — icon shows next theme */}
           <button
             onClick={toggle}
             aria-label="Toggle theme"
+            title={theme === 'dark' ? 'Switch to Light' : theme === 'light' ? 'Switch to Midnight' : 'Switch to Dark'}
             className="ml-1 p-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
           >
-            {theme === 'dark'
-              ? <Sun size={17} />
-              : <Moon size={17} />}
+            {theme === 'dark'    ? <Sun size={17} />
+           : theme === 'light'   ? <Sparkles size={17} />
+           :                       <Moon size={17} />}
           </button>
 
           <a
@@ -89,7 +97,9 @@ export default function Navbar() {
             aria-label="Toggle theme"
             className="p-2.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
           >
-            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+            {theme === 'dark'    ? <Sun size={17} />
+           : theme === 'light'   ? <Sparkles size={17} />
+           :                       <Moon size={17} />}
           </button>
           <button
             className="p-2 text-slate-600 dark:text-slate-400"

@@ -48,7 +48,7 @@ function ProjectCard({ project, index }) {
         <div className={`h-0.5 ${
           category === 'Freelance' ? 'bg-gradient-to-r from-amber-400  to-orange-400' :
           category === 'Research'  ? 'bg-gradient-to-r from-violet-500 to-purple-400' :
-                                     'bg-gradient-to-r from-primary-500 to-cyan-400'
+                                     'bg-gradient-to-r from-primary-600 to-primary-400'
         }`} />
 
         <div className="p-6 flex flex-col gap-4 flex-1">

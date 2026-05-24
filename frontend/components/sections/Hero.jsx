@@ -155,15 +155,15 @@ export default function Hero() {
             </motion.div>
 
             {/* Name + role */}
-            <motion.div {...up(0.08)}>
+            <motion.header {...up(0.08)}>
               <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-extrabold
                              text-slate-900 dark:text-white leading-[1.1] tracking-tight mb-3">
                 Devansh <span className="gradient-text">Gupta</span>
               </h1>
-              <p className="text-lg text-slate-500 dark:text-slate-400 font-medium">
+              <h2 className="text-lg text-slate-500 dark:text-slate-400 font-medium">
                 Software Engineer · Full Stack Developer
-              </p>
-            </motion.div>
+              </h2>
+            </motion.header>
 
             {/* Positioning headline */}
             <motion.p {...up(0.15)}

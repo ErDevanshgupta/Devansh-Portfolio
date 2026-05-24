@@ -1,5 +1,7 @@
+'use client';
 import Link from 'next/link';
 import { Mail, FileText } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 const GithubIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -16,12 +18,14 @@ const LinkedinIcon = ({ size = 16 }) => (
 );
 
 const NAV_LINKS = [
-  { label: 'About',      href: '/#about'      },
-  { label: 'Skills',     href: '/#skills'     },
-  { label: 'Projects',   href: '/#projects'   },
-  { label: 'Experience', href: '/#experience' },
-  { label: 'Research',   href: '/#research'   },
-  { label: 'Contact',    href: '/#contact'    },
+  { label: 'About',          href: '/#about'          },
+  { label: 'Skills',         href: '/#skills'         },
+  { label: 'Projects',       href: '/#projects'       },
+  { label: 'Experience',     href: '/#experience'     },
+  { label: 'Certifications', href: '/#certifications' },
+  { label: 'Research',       href: '/#research'       },
+  { label: 'Blog',           href: '/blog'            },
+  { label: 'Contact',        href: '/#contact'        },
 ];
 
 const SOCIALS = [
@@ -31,6 +35,12 @@ const SOCIALS = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   return (
     <footer className="border-t border-slate-200 dark:border-white/[0.06]">
 

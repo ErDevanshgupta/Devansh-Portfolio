@@ -9,7 +9,7 @@ export default function EngineeringPhilosophy() {
                         hover:border-primary-400/25 dark:hover:border-primary-700/40
                         hover:shadow-md dark:hover:shadow-primary-900/10
                         transition-all duration-300">
-          <div className="h-0.5 bg-gradient-to-r from-primary-500 to-cyan-400" />
+          <div className="h-0.5 bg-gradient-to-r from-primary-600 to-primary-400" />
 
           <div className="p-8 md:p-10">
             <div className="flex flex-col md:flex-row gap-6 md:gap-12">

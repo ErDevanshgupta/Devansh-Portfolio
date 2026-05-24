@@ -1,3 +1,4 @@
+const { logAction } = require('../utils/logger');
 const Project = require('../models/Project');
 const { createSlug } = require('../utils/slugify');
 
@@ -37,6 +38,7 @@ const createProject = async (req, res, next) => {
   try {
     const slug = req.body.slug || createSlug(req.body.title);
     const project = await Project.create({ ...req.body, slug });
+    await logAction('CREATE', 'Project', project.title || project.company || project.category || 'New Item');
     res.status(201).json({ success: true, data: project });
   } catch (err) {
     next(err);
@@ -51,6 +53,7 @@ const updateProject = async (req, res, next) => {
       { new: true, runValidators: true }
     );
     if (!project) return res.status(404).json({ success: false, message: 'Project not found' });
+    if (project) await logAction('UPDATE', 'Project', project.title || 'Item');
     res.json({ success: true, data: project });
   } catch (err) {
     next(err);
@@ -59,7 +62,8 @@ const updateProject = async (req, res, next) => {
 
 const deleteProject = async (req, res, next) => {
   try {
-    await Project.findByIdAndDelete(req.params.id);
+    const deletedItem = await Project.findByIdAndDelete(req.params.id);
+    if (deletedItem) await logAction('DELETE', 'Project', deletedItem.title || deletedItem.company || deletedItem.category || 'Item');
     res.json({ success: true, message: 'Project deleted' });
   } catch (err) {
     next(err);

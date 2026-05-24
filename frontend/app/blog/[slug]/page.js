@@ -10,14 +10,47 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const post = await getBlogPostBySlug(params.slug);
-  return { title: `${post.title} — Devansh Gupta`, description: post.excerpt };
+  return { 
+    title: `${post.title} | Devansh Gupta`, 
+    description: post.excerpt,
+    keywords: post.tags || [],
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      publishedTime: post.publishedAt,
+      authors: ['Devansh Gupta'],
+      images: post.coverImage ? [post.coverImage] : ['/profile-pic.png'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: post.coverImage ? [post.coverImage] : ['/profile-pic.png'],
+    }
+  };
 }
 
 export default async function BlogPost({ params }) {
   const post = await getBlogPostBySlug(params.slug);
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "image": post.coverImage ? [post.coverImage] : [],
+    "datePublished": post.publishedAt,
+    "dateModified": post.updatedAt || post.publishedAt,
+    "author": [{
+        "@type": "Person",
+        "name": "Devansh Gupta",
+        "url": "https://erdevanshgupta.com"
+      }]
+  };
+
   return (
     <div className="min-h-screen pt-24 pb-20">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <div className="max-w-3xl mx-auto px-6">
         <Link
           href="/blog"

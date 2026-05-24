@@ -151,7 +151,7 @@ export default function Contact() {
         {/* ── Right: elevated form card ──────────── */}
         <AnimatedSection delay={0.15}>
           <div className="glass-card overflow-hidden">
-            <div className="h-0.5 bg-gradient-to-r from-primary-500 to-cyan-400" />
+            <div className="h-0.5 bg-gradient-to-r from-primary-600 to-primary-400" />
             <div className="p-6 md:p-8">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 

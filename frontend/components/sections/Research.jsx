@@ -117,7 +117,7 @@ function PaperCard({ paper, featured = false, index = 0 }) {
                       hover:border-primary-400/30 dark:hover:border-primary-700/40
                       hover:shadow-md dark:hover:shadow-primary-900/15
                       transition-all duration-300">
-        <div className="h-0.5 bg-gradient-to-r from-primary-500 to-cyan-400" />
+        <div className="h-0.5 bg-gradient-to-r from-primary-600 to-primary-400" />
 
         <div className="p-5 flex flex-col gap-3 flex-1">
           {/* Area + year + published */}

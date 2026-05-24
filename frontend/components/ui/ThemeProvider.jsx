@@ -3,20 +3,29 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 const ThemeContext = createContext({ theme: 'dark', toggle: () => {} });
 
+const CYCLE = ['dark', 'light', 'midnight'];
+
+function applyTheme(t) {
+  const root = document.documentElement;
+  root.classList.remove('dark', 'midnight');
+  if (t === 'dark')     root.classList.add('dark');
+  if (t === 'midnight') root.classList.add('dark', 'midnight');
+}
+
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState('dark');
 
   useEffect(() => {
     const saved = localStorage.getItem('theme') || 'dark';
     setTheme(saved);
-    document.documentElement.classList.toggle('dark', saved === 'dark');
+    applyTheme(saved);
   }, []);
 
   const toggle = () => {
     setTheme(prev => {
-      const next = prev === 'dark' ? 'light' : 'dark';
+      const next = CYCLE[(CYCLE.indexOf(prev) + 1) % CYCLE.length];
       localStorage.setItem('theme', next);
-      document.documentElement.classList.toggle('dark', next === 'dark');
+      applyTheme(next);
       return next;
     });
   };

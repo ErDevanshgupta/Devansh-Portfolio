@@ -37,10 +37,25 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const project = await fetchProject(params.slug);
-  if (!project) return { title: 'Project — Devansh Gupta' };
+  if (!project) return { title: 'Project | Devansh Gupta' };
+  
   return {
-    title: `${project.title} — Devansh Gupta`,
+    title: `${project.title} | Devansh Gupta`,
     description: project.tagline,
+    keywords: [...(project.techStack || []), ...(project.keywords || [])],
+    openGraph: {
+      title: project.title,
+      description: project.tagline,
+      type: 'article',
+      authors: ['Devansh Gupta'],
+      images: ['/profile-pic.png'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: project.title,
+      description: project.tagline,
+      images: ['/profile-pic.png'],
+    }
   };
 }
 
@@ -104,6 +119,19 @@ export default async function ProjectDetail({ params }) {
       <div className="max-w-4xl mx-auto px-6">
 
         {/* Back */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareSourceCode",
+          "name": project.title,
+          "description": project.tagline,
+          "programmingLanguage": project.techStack || [],
+          "author": {
+            "@type": "Person",
+            "name": "Devansh Gupta",
+            "url": "https://erdevanshgupta.com"
+          },
+          "codeRepository": project.githubUrl !== '#' ? project.githubUrl : undefined
+        }) }} />
         <Link href="/#projects"
           className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-500
                      hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-10">
@@ -116,7 +144,7 @@ export default async function ProjectDetail({ params }) {
           <div className={`h-1 ${
             category === 'Freelance' ? 'bg-gradient-to-r from-amber-400  to-orange-400' :
             category === 'Research'  ? 'bg-gradient-to-r from-violet-500 to-purple-400' :
-                                       'bg-gradient-to-r from-primary-500 to-cyan-400'
+                                       'bg-gradient-to-r from-primary-600 to-primary-400'
           }`} />
           <div className="p-8 md:p-10">
             <div className="flex items-center gap-3 mb-5">
@@ -171,7 +199,7 @@ export default async function ProjectDetail({ params }) {
             {project.built?.length > 0 && (
               <ContentSection
                 icon={Zap}
-                accent="bg-gradient-to-r from-primary-500 to-cyan-400"
+                accent="bg-gradient-to-r from-primary-600 to-primary-400"
                 title="What I Built"
                 points={project.built}
               />
@@ -205,7 +233,7 @@ export default async function ProjectDetail({ params }) {
             {project.problem && (
               <ContentSection
                 icon={Zap}
-                accent="bg-gradient-to-r from-primary-500 to-cyan-400"
+                accent="bg-gradient-to-r from-primary-600 to-primary-400"
                 title="Problem"
                 points={[project.problem]}
               />

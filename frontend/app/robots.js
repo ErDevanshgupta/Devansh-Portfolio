@@ -1,6 +1,10 @@
 export default function robots() {
   return {
-    rules: { userAgent: '*', allow: '/', disallow: '/admin/' },
-    sitemap: 'https://yourdomain.com/sitemap.xml',
-  };
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: ['/admin/', '/api/'],
+    },
+    sitemap: 'https://erdevanshgupta.com/sitemap.xml',
+  }
 }
