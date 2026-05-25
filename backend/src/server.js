@@ -20,9 +20,25 @@ const app = express();
 
 // Security middleware
 app.use(helmet());
+
+// Allowed origins: support both www and non-www, plus optional Vercel preview URL
+const allowedOrigins = [
+  FRONTEND_URL,
+  FRONTEND_URL.replace('://', '://www.'),
+  FRONTEND_URL.replace('://www.', '://'),
+  'http://localhost:3000',
+];
+
 app.use(cors({
-  origin: FRONTEND_URL,
-  credentials: true,   // Required for cookies
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, server-to-server)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    // Allow any *.vercel.app preview deploy
+    if (/^https:\/\/[a-z0-9-]+\.vercel\.app$/.test(origin)) return callback(null, true);
+    return callback(new Error(`CORS blocked: ${origin}`));
+  },
+  credentials: true,
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
