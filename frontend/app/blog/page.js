@@ -7,6 +7,8 @@ export const metadata = {
   description: 'Technical writing on ML, computer vision, full-stack, and system design.'
 };
 
+export const revalidate = 60;
+
 export default async function Blog() {
   let posts = [];
   try { posts = await getBlogPosts(); } catch {}
