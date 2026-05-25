@@ -1,5 +1,7 @@
 export const revalidate = 3600;
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://devansh-portfolio-backend.onrender.com/api';
+
 export default async function sitemap() {
   const baseUrl = 'https://erdevanshgupta.com';
 
@@ -12,8 +14,8 @@ export default async function sitemap() {
   try {
     const timeout = AbortSignal.timeout(8000);
     const [blogsRes, projectsRes] = await Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog`, { signal: timeout }).then(r => r.json()),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects`, { signal: timeout }).then(r => r.json())
+      fetch(`${API_URL}/blog`, { signal: timeout }).then(r => r.json()),
+      fetch(`${API_URL}/projects`, { signal: timeout }).then(r => r.json())
     ]);
 
     if (blogsRes?.data) blogSlugs = blogsRes.data.map(p => p.slug);
