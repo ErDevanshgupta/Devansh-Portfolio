@@ -1,3 +1,5 @@
+export const revalidate = 3600;
+
 export default async function sitemap() {
   const baseUrl = 'https://erdevanshgupta.com';
 
@@ -8,15 +10,16 @@ export default async function sitemap() {
   let projectSlugs = [];
 
   try {
+    const timeout = AbortSignal.timeout(8000);
     const [blogsRes, projectsRes] = await Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog`).then(r => r.json()),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`).then(r => r.json())
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog`, { signal: timeout }).then(r => r.json()),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects`, { signal: timeout }).then(r => r.json())
     ]);
-    
+
     if (blogsRes?.data) blogSlugs = blogsRes.data.map(p => p.slug);
     if (projectsRes?.data) projectSlugs = projectsRes.data.map(p => p.slug);
-  } catch (err) {
-    console.warn('Could not fetch dynamic routes for sitemap generation. Falling back to empty array.');
+  } catch {
+    // backend cold or unreachable — sitemap will omit dynamic routes until next revalidation
   }
 
   const blogs = blogSlugs.map(slug => ({
