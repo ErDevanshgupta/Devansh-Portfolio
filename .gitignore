@@ -4,7 +4,7 @@ backend/.env.production
 backend/.env.local
 frontend/.env
 frontend/.env.local
-frontend/.env.production
+# frontend/.env.production — committed intentionally (NEXT_PUBLIC_ vars only, no secrets)
 Keys.txt
 
 # ── Node modules ──────────────────────────────────────
