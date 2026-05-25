@@ -1,17 +1,27 @@
 import { getBlogPostBySlug, getBlogPosts } from '@/lib/api';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { Clock, Calendar, ArrowLeft, Tag } from 'lucide-react';
 
+export const revalidate = 60;
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  const posts = await getBlogPosts();
-  return posts.map(p => ({ slug: p.slug }));
+  try {
+    const posts = await getBlogPosts();
+    return posts.map(p => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }) {
-  const post = await getBlogPostBySlug(params.slug);
-  return { 
-    title: `${post.title} | Devansh Gupta`, 
+  let post;
+  try { post = await getBlogPostBySlug(params.slug); } catch { return { title: 'Blog | Devansh Gupta' }; }
+  if (!post) return { title: 'Blog | Devansh Gupta' };
+  return {
+    title: `${post.title} | Devansh Gupta`,
     description: post.excerpt,
     keywords: post.tags || [],
     openGraph: {
@@ -32,7 +42,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function BlogPost({ params }) {
-  const post = await getBlogPostBySlug(params.slug);
+  let post;
+  try { post = await getBlogPostBySlug(params.slug); } catch { notFound(); }
+  if (!post) notFound();
 
   const articleSchema = {
     "@context": "https://schema.org",
